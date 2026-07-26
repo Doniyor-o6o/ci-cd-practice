@@ -14,7 +14,7 @@ jobs:
         run: cd my-node-app
 
       - name: npn install packages 
-        run: npm c1
+        run: npm ci
       
 
       - name: Copy files via SSH
