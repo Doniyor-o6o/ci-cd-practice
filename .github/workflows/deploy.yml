@@ -1,9 +1,9 @@
 name: Deploy app to server
 
 on:
-    push:
-      branches:
-        - main
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -13,10 +13,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: npn install packages 
-        working directory: ./my-node-app
+      - name: npm install packages
+        working-directory: ./my-node-app
         run: npm ci
-      
 
       - name: Copy files via SSH
         uses: appleboy/scp-action@v1
@@ -27,12 +26,14 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           source: "./my-node-app"
           target: /opt/ci-cd-practice/my-node-app
-      - name: Execute remote SSH commands using password
+
+      - name: Restart application
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          script: systemctl restart my-node-app
+          script: |
+            systemctl restart ci-cd-practice
 
