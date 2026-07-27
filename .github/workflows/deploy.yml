@@ -15,7 +15,7 @@ jobs:
 
       - name: npm install packages
         working-directory: ./my-node-app
-        run: npm ci # npm insstall
+        run: npm ci # npm install
 
       - name: Copy files via SSH
         uses: appleboy/scp-action@v1
