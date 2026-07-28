@@ -40,8 +40,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           source: "my-node-app/docker-compose-prod.yaml"
-          target: "/opt/my-node-app-on-docker/docker-compose.yaml"
-          strip_components: 2
+          target: "/opt/my-node-app-on-docker/"
+        
 
       - name: Deploy on server
         uses: appleboy/ssh-action@v1
