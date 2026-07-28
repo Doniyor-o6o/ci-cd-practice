@@ -40,7 +40,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: "my-node-app/docker-compose-prod.yml"
+          source: "my-node-app/docker-compose-prod.yaml"
           target: "/opt/my-node-app-on-docker/"
           strip_components: 1
 
@@ -54,12 +54,17 @@ jobs:
           script: |
             cd /opt/my-node-app-on-docker
 
-            mv /opt/my-node-app-on-docker/docker-compose-prod.yml \
-               /opt/my-node-app-on-docker/docker-compose.yaml
+            mv docker-compose-prod.yaml docker-compose.yaml
+
+            echo "=== CONTENT AFTER MV ==="
+            cat docker-compose.yaml
 
             echo "${{ secrets.REGISTRY_TOKEN }}" | docker login registry.digitalocean.com -u doniyortolibov2006@gmail.com --password-stdin
 
             yq -i '.services.web.image = "registry.digitalocean.com/devops-course-registry/my-node-app:${{ github.sha }}"' docker-compose.yaml
+
+            echo "=== CONTENT AFTER YQ ==="
+            cat docker-compose.yaml
 
             docker compose pull
             docker compose up -d --remove-orphans
