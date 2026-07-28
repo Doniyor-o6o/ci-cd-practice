@@ -35,5 +35,5 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            systemctl restart ci-cd-practice  
+            systemctl restart ci-cd-practice  #s
 
