@@ -54,8 +54,9 @@ jobs:
           script: |
             cd /opt/my-node-app-on-docker
 
-            mv docker-compose-prod.yml docker-compose.yaml
-
+            mv /opt/my-node-app-on-docker/docker-compose-prod.yaml \
+            /opt/my-node-app-on-docker/docker-compose.yaml
+            docker login docker login registry.digitalocean.com -u doniyortolibov2006@gmail.com --password-stdin
             yq -i '.services.web.image = "registry.digitalocean.com/devops-course-registry/my-node-app:${{ github.sha }}"' docker-compose.yaml
 
             docker login registry.digitalocean.com -u doniyortolibov2006@gmail.com -p "${{ secrets.REGISTRY_TOKEN }}"
