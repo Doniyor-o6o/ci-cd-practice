@@ -39,8 +39,9 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: "my-node-app/*"
+          source: "my-node-app/docker-compose-prod.yml"
           target: "/opt/my-node-app-on-docker/"
+          strip_components: 2
         
 
       - name: Deploy on server
