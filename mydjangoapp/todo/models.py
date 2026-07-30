@@ -8,3 +8,4 @@ class Task(models.Model):
     return self.title
 
 # Create your models here.
+
