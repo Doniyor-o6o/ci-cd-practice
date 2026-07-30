@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+env/
+venv/
+.venv/
+
+# Environment variables
+.env
+.env.*
+
+# Django
+db.sqlite3
+*.sqlite3
+
+# Static & Media
+staticfiles/
+media/
+
+# Migrations (optional)
+# Agar migrations'ni Git'ga qo'shmoqchi bo'lsangiz, bu qatorni olib tashlang.
+# */migrations/
+# !*/migrations/__init__.py
+
+# Logs
+*.log
+
+# Coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# JetBrains
+.idea/
+
+# Build
+build/
+dist/
+*.egg-info/
+
+# mypy
+.mypy_cache/
+
+# Ruff
+.ruff_cache/
+
+# PyCharm
+*.iml
