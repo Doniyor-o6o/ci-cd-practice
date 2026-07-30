@@ -45,8 +45,10 @@ jobs:
           key: ${{ secrets.DJANGO_SSH_KEY}}
           port: ${{ secrets.DJANGO_SSH_PORT}}
           script: |
+            cd /opt/mydjangoapp
             python3 -m venv env 
+            source env/bin/activate
             ./env/bin/pip install -r requirements.txt
-            python3 /opt/mydjangoapp/manage.py migrate
+            pip3 manage.py migrate
             systemctl restart mydjangoapp-gunicorn
 
