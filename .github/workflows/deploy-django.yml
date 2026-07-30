@@ -31,7 +31,7 @@ jobs:
       - name: Copy files via SSH
         uses: appleboy/scp-action@v1
         with:
-          host: ${{ secrets.DJANGO_SSH_HOST }}
+          host: ${{secrets.DJANGO_SSH_HOST}}
           username: ${{ secrets.DJANGO_SSH_USERNAME }}
           key: ${{ secrets.DJANGO_SSH_KEY }}
           port: ${{ secrets.DJANGO_SSH_PORT }}
