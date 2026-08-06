@@ -1,18 +1,17 @@
 name: Deploy django app with Docker
 
 on:
-  # push:
-  #   branches:
-  #     - main
-  #     - '.github/workflows/deploy-django-with-docker.yml'
-  #     - 'mydjangoapp/**'
-  # workflow_dispatch:
-  outputs:
-    image_name: registry.digitalocean.com/my-registry123/mydjangoapp:${{ github.sha }}
+  push:
+    branches:
+      - main
+      # - '.github/workflows/deploy-django-with-docker.yml'
+      # - 'mydjangoapp/**'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -20,7 +19,7 @@ jobs:
       - name: Build Docker image
         working-directory: ./mydjangoapp
         run: |
-          docker build -t registry.digitalocean.com/my-container-registry123/mydjangoapp:${{ github.sha }} .
+          docker build -t registry.digitalocean.com/devops-course-registry/mydjangoapp:${{ github.sha }} .
 
       - name: Login to DigitalOcean Registry
         run: |
@@ -33,6 +32,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -56,14 +56,13 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd /opt/mydjangoapp/
- 
 
             echo "=== CONTENT AFTER MV ==="
             cat docker-compose.yaml
 
             echo "${{ secrets.REGISTRY_TOKEN }}" | docker login registry.digitalocean.com -u doniyortolibov2006@gmail.com --password-stdin
 
-            yq -i '.services.web.image = "registry.digitalocean.com/devops-course-registry/my-node-app:${{ github.sha }}"' docker-compose.yaml
+            yq -i '.services.django.image = "registry.digitalocean.com/devops-course-registry/mydjangoapp:${{ github.sha }}"' docker-compose.yaml
 
             echo "=== CONTENT AFTER YQ ==="
             cat docker-compose.yaml
