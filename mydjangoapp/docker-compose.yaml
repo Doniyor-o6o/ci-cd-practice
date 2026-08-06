@@ -1,0 +1,47 @@
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web
+    restart: unless-stopped
+
+    environment:
+      DB_NAME: app_db
+      DB_USER: app_user
+      DB_PASSWORD: yTr2vMsaA2PP5d5p3yAxA28w8N94JQ
+      DB_HOST: db
+      DB_PORT: 5432
+      ALLOWED_HOSTS: 127.0.0.1,localhost
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+
+    depends_on:
+      - db
+
+    command: gunicorn --bind 0.0.0.0:8000 mydjangoapp.wsgi:application
+
+
+  db:
+    image: postgres:17-alpine
+    container_name: postgres-db
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: app_db
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: yTr2vMsaA2PP5d5p3yAxA28w8N94JQ
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
