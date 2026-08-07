@@ -78,4 +78,4 @@ jobs:
 
             docker compose pull
             docker compose up -d --remove-orphans
-            docker compose exec nginx -s reload
+            docker compose exec nginx nginx -s reload
