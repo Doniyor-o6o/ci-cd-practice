@@ -71,7 +71,7 @@ jobs:
 
             echo "${{ secrets.REGISTRY_TOKEN }}" | docker login registry.digitalocean.com -u doniyortolibov2006@gmail.com --password-stdin
 
-            yq -i '.services.web.image = "registry.digitalocean.com/devops-course-registry/mydjangoapp:${{ github.sha }}"' docker-compose.yaml
+            yq -i '.services.web.image = "registry.digitalocean.com/my-registry123/mydjangoapp:${{ github.sha }}"' docker-compose.yaml
 
             echo "=== CONTENT AFTER YQ ==="
             cat docker-compose.yaml
