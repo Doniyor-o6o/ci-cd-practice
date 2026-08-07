@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-      # - '.github/workflows/deploy-django-with-docker.yml'
-      # - 'mydjangoapp/**'
+    # - '.github/workflows/deploy-django-with-docker.yml'
+    # - 'mydjangoapp/**'
   workflow_dispatch:
 
 jobs:
@@ -13,13 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Debug SSH key
-        run: |
-          echo "Key length: ${#SSH_KEY}"
-          echo "First line: $(echo "$SSH_KEY" | head -1)"
-          echo "Last line: $(echo "$SSH_KEY" | tail -1)"
-        env:
-          SSH_KEY: ${{ secrets.SSH_KEY }}
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -43,6 +36,14 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Debug SSH key
+        run: |
+          echo "Key length: ${#SSH_KEY}"
+          echo "First line: $(echo "$SSH_KEY" | head -1)"
+          echo "Last line: $(echo "$SSH_KEY" | tail -1)"
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
 
       - name: Copy docker-compose file
         uses: appleboy/scp-action@v1
