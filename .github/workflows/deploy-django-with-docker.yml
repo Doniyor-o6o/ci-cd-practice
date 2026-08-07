@@ -45,14 +45,14 @@ jobs:
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
 
-      - name: Copy docker-compose file
+      - name: Copy config files
         uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: "mydjangoapp/deploy/*"
+          source: "mydjangoapp/deploy/docker-compose.yaml,mydjangoapp/deploy/nginx.conf"
           target: "/opt/mydjangoapp/"
           strip_components: 3
 
@@ -78,3 +78,4 @@ jobs:
 
             docker compose pull
             docker compose up -d --remove-orphans
+            docker compose exec nginx -s reload
