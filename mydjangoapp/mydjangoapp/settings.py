@@ -25,7 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-*+w=m-iu0ds+38@517_$z4#pl87c2p+r*u!k(&9l1f)26!a2f_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+ENV = config('ENV', default='development')
+DEBUG = ENV != 'production'
 
 ALLOWED_HOSTS = ['0.0.0.0' ,'app.doniyordev.uz', "127.0.0.1",
     "localhost",]
