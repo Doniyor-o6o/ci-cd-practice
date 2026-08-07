@@ -4,13 +4,13 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
-    depends_on:
-      - web
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - web
 
   web:
-    image: registry.digitalocean.com/devops-course-registry/mydjangoapp:latest
+    image: registry.digitalocean.com/my-registry123/mydjangoapp:latest
     restart: unless-stopped
     command: gunicorn mydjangoapp.wsgi:application --bind 0.0.0.0:8000
     env_file:
