@@ -13,6 +13,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Debug SSH key
+        run: |
+          echo "Key length: ${#SSH_KEY}"
+          echo "First line: $(echo "$SSH_KEY" | head -1)"
+          echo "Last line: $(echo "$SSH_KEY" | tail -1)"
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
       - name: Checkout repository
         uses: actions/checkout@v4
 
