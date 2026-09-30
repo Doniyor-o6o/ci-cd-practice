@@ -63,7 +63,12 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd /opt/mydjangoapp/
+            set -eu
+            cd /opt/mydjangoapp/mydjangoapp/deploy
+
+            pwd
+            ls -la
+            test -f docker-compose.yaml
 
             echo "=== CONTENT AFTER MV ==="
             cat docker-compose.yaml
