@@ -10,7 +10,7 @@ services:
       - web
 
   web:
-    image: registry.digitalocean.com/my-registry123/mydjangoapp:latest
+    image: registry.digitalocean.com/my-registry123/mydjangoapp:1.0.0
     restart: unless-stopped
     command: gunicorn mydjangoapp.wsgi:application --bind 0.0.0.0:8000
     env_file:
