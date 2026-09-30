@@ -64,7 +64,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             set -eu
-            cd /opt/mydjangoapp/mydjangoapp/deploy
+            cd /opt/mydjangoapp
 
             pwd
             ls -la
