@@ -63,18 +63,21 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd /opt/mydjangoapp/
+            set -eu
+            cd /opt/mydjangoapp/mydjangoapp/deploy
 
-            echo "=== CONTENT AFTER MV ==="
-            cat docker-compose.yaml
+            echo "${{ secrets.REGISTRY_TOKEN }}" | docker login registry.digitalocean.com \
+              -u doniyortolibov2006@gmail.com \
+              --password-stdin
 
-            echo "${{ secrets.REGISTRY_TOKEN }}" | docker login registry.digitalocean.com -u doniyortolibov2006@gmail.com --password-stdin
+            cat > compose.image.yaml <<'EOF'
+            services:
+              web:
+                image: registry.digitalocean.com/my-registry123/mydjangoapp:${{ github.sha }}
+            EOF
 
-            yq -i '.services.web.image = "registry.digitalocean.com/my-registry123/mydjangoapp:${{ github.sha }}"' docker-compose.yaml
-
-            echo "=== CONTENT AFTER YQ ==="
-            cat docker-compose.yaml
-
-            docker compose pull
-            docker compose up -d --remove-orphans
-            docker compose exec nginx nginx -s reload
+            docker compose -f docker-compose.yaml -f compose.image.yaml config --quiet
+            docker compose -f docker-compose.yaml -f compose.image.yaml pull
+            docker compose -f docker-compose.yaml -f compose.image.yaml up -d --remove-orphans
+            docker compose -f docker-compose.yaml -f compose.image.yaml exec -T web python manage.py migrate
+            docker compose -f docker-compose.yaml -f compose.image.yaml exec -T nginx nginx -s reload
